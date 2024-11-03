@@ -7,6 +7,7 @@ RUN apt update && apt install --no-install-recommends -y \
     python3-setuptools \
     python3-pip \
     python3 \
+    python3-yaml \
     python3-prometheus-client
 
 WORKDIR /usr/src/app
