@@ -1,0 +1,15 @@
+version: '2.4'
+
+services:
+
+    blescanner:
+        image: registry.messner.click/gunny26/docker-blescanner:latest
+        container_name: blescanner
+        restart: unless-stopped
+        mem_limit: 128m
+        cpu_count: 2
+        privileged: true
+        environment:
+            TZ: Europe/Vienna
+            APP_LOG_LEVEL: INFO  # to use in logging
+            APP_INTERVAL: 20  # seconds

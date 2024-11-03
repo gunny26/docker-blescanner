@@ -1,0 +1,17 @@
+docker-blescanner
+[master 80037d0] automatic pre container built commit
+ 11 files changed, 109 insertions(+), 594 deletions(-)
+ delete mode 100644 __pycache__/main.cpython-310.pyc
+ delete mode 100644 __pycache__/redis.cpython-310.pyc
+ rewrite build/main.py (97%)
+ delete mode 100644 dev/main.py
+ delete mode 100644 dev/redis_test.py
+ delete mode 100644 latest.log
+ delete mode 100644 stable.log
+ delete mode 100644 stable.tmp
+ delete mode 100755 testrun.sh
+using 2024-11-03-1ba1bac
+Sending build context to Docker daemon  204.3kB
+Step 1/11 : FROM --platform=linux/arm64/v8 arm64v8/ubuntu:24.04
+24.04: Pulling from arm64v8/ubuntu
+1f6304731171: Pulling fs layer
