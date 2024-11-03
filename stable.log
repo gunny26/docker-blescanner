@@ -1,0 +1,47 @@
+docker-blescanner
+[master 200ab43] automatic pre deployment commit
+ 3 files changed, 320 insertions(+), 15 deletions(-)
+ rewrite docker-compose.yml (93%)
+ create mode 100644 latest.log
+ rename latest.tmp => stable.tmp (100%)
+using 2024-11-03-dd3af0d
+Sending build context to Docker daemon  132.1kB
+Step 1/12 : FROM --platform=linux/arm64/v8 arm64v8/ubuntu:24.04
+ ---> f825f99d3d8a
+Step 2/12 : ENV DEBIAN_FRONTEND=noninteractive
+ ---> Using cache
+ ---> b9805c9c1b12
+Step 3/12 : ENV TZ=Europe/Vienna
+ ---> Using cache
+ ---> e7ff24812de5
+Step 4/12 : RUN apt update && apt install --no-install-recommends -y     tzdata     python3-setuptools     python3-pip     python3     python3-yaml     python3-prometheus-client
+ ---> Using cache
+ ---> 72cda44cf32f
+Step 5/12 : WORKDIR /usr/src/app
+ ---> Using cache
+ ---> 73f889e26797
+Step 6/12 : RUN pip3 install --break-system-packages --disable-pip-version-check --no-cache-dir bleak
+ ---> Using cache
+ ---> 7758df3757d5
+Step 7/12 : RUN pip3 freeze
+ ---> Using cache
+ ---> 0ea87597321d
+Step 8/12 : COPY build/main.py /usr/src/app/main.py
+ ---> Using cache
+ ---> 4d141e1ae257
+Step 9/12 : RUN apt -y purge python3-pip python3-setuptools;     apt -y autoremove;     apt -y clean;
+ ---> Using cache
+ ---> a33623e9cd50
+Step 10/12 : USER ubuntu
+ ---> Using cache
+ ---> 70dcc74e480e
+Step 11/12 : EXPOSE 9100/tcp
+ ---> Using cache
+ ---> 417ffbd4fd14
+Step 12/12 : CMD ["python3", "-u", "/usr/src/app/main.py"]
+ ---> Using cache
+ ---> edc40459812b
+Successfully built edc40459812b
+Successfully tagged registry.messner.click/gunny26/docker-blescanner:2024-11-03-dd3af0d
+The push refers to repository [registry.messner.click/gunny26/docker-blescanner]
+The push refers to repository [registry.messner.click/gunny26/docker-blescanner]
