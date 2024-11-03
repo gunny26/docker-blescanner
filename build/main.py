@@ -8,8 +8,8 @@ import yaml
 from bleak import BleakScanner
 from prometheus_client import start_http_server, Counter, Summary
 
-INTERVAL = int(os.environ.get("INTERVAL", "20"))  # interval in seconds to do the sync
-LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+INTERVAL = int(os.environ.get("APP_INTERVAL", "20"))  # interval in seconds to do the sync
+LOG_LEVEL = os.environ.get("APP_LOG_LEVEL", "INFO")
 
 # setting Logging
 if LOG_LEVEL == "INFO":
@@ -60,7 +60,9 @@ seen: 1
 async def main():
     devices = await BleakScanner.discover()
     for d in devices:
-        logging.debug(d)
+        logging.debug(d.address)
+        logging.debug(d.name)
+        logging.debug(d.details)
         if d.details["props"]["AddressType"] == "random":  # ignoring random addresses
             logging.info(f"ignoring {d.address}, this is a RandomAddress")
             continue
