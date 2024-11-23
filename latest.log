@@ -1,8 +1,8 @@
 docker-blescanner
-[main 82a578a] automatic pre latest image built commit
- 2 files changed, 14 insertions(+), 12 deletions(-)
-using 2024-11-23-ff52ea1
-Sending build context to Docker daemon  198.7kB
+[main efc3fa8] automatic pre latest image built commit
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+using 2024-11-23-0609590
+Sending build context to Docker daemon  212.5kB
 Step 1/11 : FROM ubuntu:24.04
  ---> fec8bfd95b54
 Step 2/11 : ENV DEBIAN_FRONTEND=noninteractive
@@ -24,9 +24,9 @@ Step 7/11 : RUN pip3 freeze
  ---> Using cache
  ---> aa218f9c78ef
 Step 8/11 : COPY build/main.py /usr/src/app/main.py
- ---> 4656e8316067
+ ---> b62adc6e44c7
 Step 9/11 : RUN apt -y purge python3-pip python3-setuptools;     apt -y autoremove;     apt -y clean;
- ---> Running in 92b65a4a2405
+ ---> Running in df56ccd0c4e8
 [91m
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
@@ -59,15 +59,15 @@ Removing python3-wheel (0.42.0-2) ...
 [91m
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
-[0mRemoving intermediate container 92b65a4a2405
- ---> 1a8dfe4a3045
+[0mRemoving intermediate container df56ccd0c4e8
+ ---> 697d3696aff9
 Step 10/11 : USER ubuntu
- ---> Running in c812e01645b8
-Removing intermediate container c812e01645b8
- ---> e16ffa754da8
+ ---> Running in b86bb29a1968
+Removing intermediate container b86bb29a1968
+ ---> 8acd48ab42a1
 Step 11/11 : CMD ["python3", "-u", "/usr/src/app/main.py"]
- ---> Running in dc8172604ad6
-Removing intermediate container dc8172604ad6
- ---> 0e3fd9142db7
-Successfully built 0e3fd9142db7
-Successfully tagged registry.messner.click/gunny26/docker-blescanner:2024-11-23-ff52ea1
+ ---> Running in 22bca6530fb8
+Removing intermediate container 22bca6530fb8
+ ---> d485d06c2c57
+Successfully built d485d06c2c57
+Successfully tagged registry.messner.click/gunny26/docker-blescanner:2024-11-23-0609590
