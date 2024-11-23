@@ -96,6 +96,7 @@ async def main():
 
 
 if __name__ == "__main__":
+    logging.info(f"starting prometheus exporter on port {EXPORTER_PORT}")
     start_http_server(EXPORTER_PORT)  # start prometheus exporter on port 9000/tcp
     while True:  # start endloess loop to scan ever INTERVALS seconds
         try:
