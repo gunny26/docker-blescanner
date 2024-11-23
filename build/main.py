@@ -3,12 +3,15 @@ import asyncio
 import logging
 import os
 import time
+
 # custom modules
 import yaml
 from bleak import BleakScanner
 from prometheus_client import start_http_server, Counter, Summary
 
-INTERVAL = int(os.environ.get("APP_INTERVAL", "20"))  # interval in seconds to do the sync
+INTERVAL = int(
+    os.environ.get("APP_INTERVAL", "20")
+)  # interval in seconds to do the sync
 LOG_LEVEL = os.environ.get("APP_LOG_LEVEL", "INFO")
 
 # setting Logging
@@ -23,7 +26,11 @@ if LOG_LEVEL == "DEBUG":
 
 # prometheus metrics
 SUMMARY = Summary("blescanner_processing_seconds", "Time spent processing a scan")
-DEVICE_SEEN_TOTAL = Counter("blescanner_seen_total", "Number of intervals this devices was seen", ["address", "name"])
+DEVICE_SEEN_TOTAL = Counter(
+    "blescanner_seen_total",
+    "Number of intervals this devices was seen",
+    ["address", "name"],
+)
 
 DEVICES = {}  # just for internal use
 
@@ -42,7 +49,7 @@ details:
     LegacyPairing: false
     ManufacturerData:
       76: !!python/object/apply:builtins.bytearray
-      - "\x16\b\0\x93'\xDB\xC5\x17\x01\x05"
+      - "\x16\b\0\x93'\xdb\xc5\x17\x01\x05"
       - latin-1
     Paired: false
     RSSI: -92
@@ -66,7 +73,9 @@ async def main():
         if d.details["props"]["AddressType"] == "random":  # ignoring random addresses
             logging.info(f"ignoring {d.address}, this is a RandomAddress")
             continue
-        DEVICE_SEEN_TOTAL.labels(address=d.address, name=d.name).inc()  # increment up if device was seen
+        DEVICE_SEEN_TOTAL.labels(
+            address=d.address, name=d.name
+        ).inc()  # increment up if device was seen
         if d.address not in DEVICES:
             logging.info("new BLE device detected")
             DEVICES[d.address] = {
@@ -75,7 +84,7 @@ async def main():
                 "details": d.details,
                 "first_seen": time.time(),
                 "last_seen": time.time(),
-                "seen": 1
+                "seen": 1,
             }
             logging.debug(yaml.dump(DEVICES[d.address], indent=2))
         else:
@@ -94,7 +103,9 @@ if __name__ == "__main__":
             logging.exception(exc)
             time.sleep(INTERVAL)
         # just for INFO
-        for key, value in sorted(DEVICES.items(), key=lambda item: item[1]["last_seen"], reverse=True):
+        for key, value in sorted(
+            DEVICES.items(), key=lambda item: item[1]["last_seen"], reverse=True
+        ):
             logging.info(f"{key}\t{value['last_seen']}\t{value['seen']}")
         logging.info(f"found in total {len(DEVICES)} BLE devices")
         time.sleep(INTERVAL)
