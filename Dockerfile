@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64/v8 arm64v8/ubuntu:24.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Vienna
@@ -29,16 +29,6 @@ RUN apt -y purge python3-pip python3-setuptools; \
 # add HEALTHCHECK command to check is container is running
 # HEALTHCHECK --interval=5m --timeout=3s CMD curl -I http://localhost:9100/ || exit 1
 
-# adding NON-ROOT user
-# RUN groupadd --gid 1000 newuser && \
-#     useradd \
-#       --home-dir /usr/src/app \
-#       --uid 1000 \
-#       --gid 1000 \
-#       --shell /bin/sh \
-#       --no-create-home \
-#       appuser
-# RUN chown -R appuser /usr/src/app
+# as of ubuntu:24.04 there is a ubuntu user preinstalled
 USER ubuntu
-EXPOSE 9100/tcp
 CMD ["python3", "-u", "/usr/src/app/main.py"]
