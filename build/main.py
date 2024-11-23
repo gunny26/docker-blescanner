@@ -72,14 +72,14 @@ async def main():
         logging.debug(d.name)
         logging.debug(d.details)
         if d.details["props"]["AddressType"] == "random":  # ignoring random addresses
-            logging.info(f"ignoring {d.address}, this is a RandomAddress")
+            logging.info(f"Ignoring {d.address}, this is a RandomAddress")
             continue
         DEVICE_SEEN_TOTAL.labels(
             address=d.address, name=d.name
         ).inc()  # increment up if device was seen
 
         if d.address not in DEVICES:
-            logging.info("new BLE device detected")
+            logging.info(f"New BLE device with address {d.address} detected")
             DEVICES[d.address] = {
                 "address": d.address,
                 "name": d.name,
