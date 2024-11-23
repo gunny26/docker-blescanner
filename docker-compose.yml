@@ -5,15 +5,16 @@ services:
   blescanner:
     image: registry.messner.click/gunny26/docker-blescanner:latest
     container_name: blescanner
-    restart: unless-stopped
+    restart: no
     mem_limit: 128m
     cpu_count: 2
     privileged: true
     volumes:
       - /run/dbus:/run/dbus:ro
     ports:
-      - 8000:8000
+      - 8000:9100
     environment:
       TZ: Europe/Vienna
-      APP_LOG_LEVEL: INFO  # to use in logging
-      APP_INTERVAL: 20  # seconds
+      EXPORTER_LOG_LEVEL: INFO  # to use in logging
+      EXPORTER_INTERVAL: 20  # seconds
+      EXPORTER_PORT: 9100  # tcp port to listen in container

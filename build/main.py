@@ -9,19 +9,20 @@ import yaml
 from bleak import BleakScanner
 from prometheus_client import start_http_server, Counter, Summary
 
-INTERVAL = int(
+EXPORTER_INTERVAL = int(
     os.environ.get("APP_INTERVAL", "20")
 )  # interval in seconds to do the sync
-LOG_LEVEL = os.environ.get("APP_LOG_LEVEL", "INFO")
+EXPORTER_LOG_LEVEL = os.environ.get("EXPORTER_LOG_LEVEL", "INFO")
+EXPORTER_PORT = int(os.environ.get("EXPORTER_PORT", "9100"))
 
 # setting Logging
-if LOG_LEVEL == "INFO":
+if EXPORTER_LOG_LEVEL == "INFO":
     logging.getLogger().setLevel(logging.INFO)
 
-if LOG_LEVEL == "ERROR":
+if EXPORTER_LOG_LEVEL == "ERROR":
     logging.getLogger().setLevel(logging.ERROR)
 
-if LOG_LEVEL == "DEBUG":
+if EXPORTER_LOG_LEVEL == "DEBUG":
     logging.getLogger().setLevel(logging.DEBUG)
 
 # prometheus metrics
@@ -76,6 +77,7 @@ async def main():
         DEVICE_SEEN_TOTAL.labels(
             address=d.address, name=d.name
         ).inc()  # increment up if device was seen
+
         if d.address not in DEVICES:
             logging.info("new BLE device detected")
             DEVICES[d.address] = {
@@ -94,18 +96,17 @@ async def main():
 
 
 if __name__ == "__main__":
-    start_http_server(8000)  # start prometheus exporter on port 9000/tcp
+    start_http_server(EXPORTER_PORT)  # start prometheus exporter on port 9000/tcp
     while True:  # start endloess loop to scan ever INTERVALS seconds
         try:
             asyncio.run(main())
         except Exception as exc:
             logging.error("Some Exception while scanning")
             logging.exception(exc)
-            time.sleep(INTERVAL)
         # just for INFO
         for key, value in sorted(
             DEVICES.items(), key=lambda item: item[1]["last_seen"], reverse=True
         ):
             logging.info(f"{key}\t{value['last_seen']}\t{value['seen']}")
         logging.info(f"found in total {len(DEVICES)} BLE devices")
-        time.sleep(INTERVAL)
+        time.sleep(EXPORTER_INTERVAL)
