@@ -1,9 +1,10 @@
 docker-blescanner
-[master 5d80c12] automatic pre deployment commit
- 1 file changed, 47 insertions(+)
- create mode 100644 stable.log
-using 2024-11-03-200ab43
-Sending build context to Docker daemon  139.3kB
+[master d66f9e4] automatic pre deployment commit
+ 2 files changed, 83 insertions(+), 301 deletions(-)
+ rewrite latest.log (80%)
+ create mode 100644 stable.tmp
+using 2024-11-03-601c461
+Sending build context to Docker daemon  139.8kB
 Step 1/12 : FROM --platform=linux/arm64/v8 arm64v8/ubuntu:24.04
  ---> f825f99d3d8a
 Step 2/12 : ENV DEBIAN_FRONTEND=noninteractive
@@ -26,48 +27,48 @@ Step 7/12 : RUN pip3 freeze
  ---> 0ea87597321d
 Step 8/12 : COPY build/main.py /usr/src/app/main.py
  ---> Using cache
- ---> 4d141e1ae257
+ ---> 8246493575af
 Step 9/12 : RUN apt -y purge python3-pip python3-setuptools;     apt -y autoremove;     apt -y clean;
  ---> Using cache
- ---> a33623e9cd50
+ ---> 692990b77fec
 Step 10/12 : USER ubuntu
  ---> Using cache
- ---> 70dcc74e480e
+ ---> 21a6fdc25b78
 Step 11/12 : EXPOSE 9100/tcp
  ---> Using cache
- ---> 417ffbd4fd14
+ ---> 966746251985
 Step 12/12 : CMD ["python3", "-u", "/usr/src/app/main.py"]
  ---> Using cache
- ---> edc40459812b
-Successfully built edc40459812b
-Successfully tagged registry.messner.click/gunny26/docker-blescanner:2024-11-03-200ab43
+ ---> 98684b86bef5
+Successfully built 98684b86bef5
+Successfully tagged registry.messner.click/gunny26/docker-blescanner:2024-11-03-601c461
 The push refers to repository [registry.messner.click/gunny26/docker-blescanner]
-35d9e8146a3c: Preparing
-5aaaa689c940: Preparing
+e73a347e3b12: Preparing
+fe96eb217bb9: Preparing
 cb2de2bf62bd: Preparing
 5a32d97d2572: Preparing
 a3d5197894bc: Preparing
 fcecd6f30cfb: Preparing
 fcecd6f30cfb: Waiting
-5a32d97d2572: Pushed
-35d9e8146a3c: Pushed
-5aaaa689c940: Pushed
-cb2de2bf62bd: Pushed
-a3d5197894bc: Pushed
-fcecd6f30cfb: Pushed
-2024-11-03-200ab43: digest: sha256:6f396fae2340950b22a297b717a240bdcbb1443b25b717b6241f8605c207e155 size: 1577
-The push refers to repository [registry.messner.click/gunny26/docker-blescanner]
-35d9e8146a3c: Preparing
-5aaaa689c940: Preparing
-cb2de2bf62bd: Preparing
-5a32d97d2572: Preparing
-a3d5197894bc: Preparing
-fcecd6f30cfb: Preparing
-fcecd6f30cfb: Waiting
-5aaaa689c940: Layer already exists
+cb2de2bf62bd: Layer already exists
 5a32d97d2572: Layer already exists
 a3d5197894bc: Layer already exists
-cb2de2bf62bd: Layer already exists
-35d9e8146a3c: Layer already exists
 fcecd6f30cfb: Layer already exists
-stable: digest: sha256:6f396fae2340950b22a297b717a240bdcbb1443b25b717b6241f8605c207e155 size: 1577
+fe96eb217bb9: Pushed
+e73a347e3b12: Pushed
+2024-11-03-601c461: digest: sha256:217151a0c6eefdd07309fd83612fda744b0117573a70f2708083ab01f59c5354 size: 1577
+The push refers to repository [registry.messner.click/gunny26/docker-blescanner]
+e73a347e3b12: Preparing
+fe96eb217bb9: Preparing
+cb2de2bf62bd: Preparing
+5a32d97d2572: Preparing
+a3d5197894bc: Preparing
+fcecd6f30cfb: Preparing
+fcecd6f30cfb: Waiting
+a3d5197894bc: Layer already exists
+fe96eb217bb9: Layer already exists
+cb2de2bf62bd: Layer already exists
+5a32d97d2572: Layer already exists
+e73a347e3b12: Layer already exists
+fcecd6f30cfb: Layer already exists
+stable: digest: sha256:217151a0c6eefdd07309fd83612fda744b0117573a70f2708083ab01f59c5354 size: 1577
